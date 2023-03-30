@@ -2,39 +2,82 @@
 
 <head>
     <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<style>
+			/* 小屏幕手机端 */
+			@media (min-width: 0px) and (max-width:768px) {
+				.div1{
+					width: 100px;
+				}
+			}
+			
+			/* 中等屏幕（桌面显示器，大于等于 992px） */
+			@media (min-width: 768px) and (max-width:992px){
+				.div1{
+					width: 300px;
+				}
+			}
+			
+			/* 大屏幕（大桌面显示器，大于等于 1200px） */
+			@media (min-width: 992px) {
+				.div1{
+					width: 500px;
+				}
+			}
+		</style>
+		
     <title>阳春市中队辅导员号码查询</title>
 
     <script>
-        function jump(){
-          var httpRequest = new XMLHttpRequest();//第一步：建立所需的对象
+        function jump()
+		{
           var url = 'https://hljapi.cyol.com/appassist/coach/get_mobile?school=%1&grade=%2&squad=%3';
-          url = url.replace("%1",document.getElementById("school").value);
+		  var schoolStr = document.getElementById("school").value;
+          url = url.replace("%1", schoolStr);
+		  
           var grade = document.getElementById("grade");
-          url = url.replace("%2",grade.options[grade.selectedIndex].text);
+		  var gradeStr = grade.options[grade.selectedIndex].text;
+          url = url.replace("%2", gradeStr);
+		  
           var squad = document.getElementById("squad");
-          url = url.replace("%3",squad.options[squad.selectedIndex].text);
-                httpRequest.open('GET', url, true);//第二步：打开连接  将请求参数写在url中
-                httpRequest.send();//第三步：发送请求  将请求参数写在URL中
-                /**
-                 * 获取数据后的处理程序
-                 */
-                httpRequest.onreadystatechange = function () {
-                    if (httpRequest.readyState == 4 && httpRequest.status == 200) {
-                        var json = httpRequest.responseText;//获取到json字符串，还需解析
-                        document.getElementById("show").innerHTML = json;
-                    }
-                };
+		  var squadStr = squad.options[squad.selectedIndex].text;
+          url = url.replace("%3", squadStr);
+		  
+          var httpRequest = new XMLHttpRequest();
+          httpRequest.open('GET', url, true);
+          httpRequest.send();
+          
+		  /**
+           * 获取数据
+           */
+          httpRequest.onreadystatechange = function () 
+		  {
+            if (httpRequest.readyState == 4 && httpRequest.status == 200) 
+			{
+				var json = JSON.parse(httpRequest.responseText);
+				if (json.code == "200")
+				{
+					document.getElementById("show").innerHTML = schoolStr + gradeStr + squadStr + "：<br>" + json.data;
+				}
+				else
+				{
+					var json = JSON.parse(httpRequest.responseText);
+					document.getElementById("show").innerHTML = "请求出错：" + json.msg;
+				}
+            }
+          };
         }
     </script>
 </head>
 
 
 <body>
-    <h1>中队辅导员号码查询</h1>
+<div>
+    <h1>阳春市中队辅导员号码查询</h1>
     <label>学校全称：</label>
-    <div><input type="text" id="school" placeholder="" autocomplete="off" alizi-request="1" class="alizi-input-text" value=""></div>
+    <div><input type="text" id="school" placeholder="" autocomplete="off" alizi-request="1" class="div1" value=""></div>
     <label>班级：</label>
-    <div>
+    <div class="div1">
         <form>
             <select id="grade">
                 <option>一年级</option>
@@ -50,7 +93,7 @@
         </form>
     </div>
     <label class="rows-head">中队：</label>
-    <div>
+    <div class="div1">
         <form>
             <select id="squad">
                 <option>一中队</option>
@@ -105,11 +148,11 @@
                 <option>五十中队</option>
             </select>
         </form>
-    </div>
+    </div class="div1">
     <button type="button" onclick="jump()">查询</button>
     <p id="show"></p>
 
-
+</div>
 </body>
 
 </html>
