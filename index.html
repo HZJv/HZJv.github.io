@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>阳春市中队辅导员号码查询</title>
+
+    <script>
+        function jump(){
+          var httpRequest = new XMLHttpRequest();//第一步：建立所需的对象
+          var url = 'https://hljapi.cyol.com/appassist/coach/get_mobile?school=%1&grade=%2&squad=%3';
+          url = url.replace("%1",document.getElementById("school").value);
+          var grade = document.getElementById("grade");
+          url = url.replace("%2",grade.options[grade.selectedIndex].text);
+          var squad = document.getElementById("squad");
+          url = url.replace("%3",squad.options[squad.selectedIndex].text);
+                httpRequest.open('GET', url, true);//第二步：打开连接  将请求参数写在url中
+                httpRequest.send();//第三步：发送请求  将请求参数写在URL中
+                /**
+                 * 获取数据后的处理程序
+                 */
+                httpRequest.onreadystatechange = function () {
+                    if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+                        var json = httpRequest.responseText;//获取到json字符串，还需解析
+                        document.getElementById("show").innerHTML = json;
+                    }
+                };
+        }
+    </script>
+</head>
+
+
+<body>
+    <h1>中队辅导员号码查询</h1>
+    <label>学校全称：</label>
+    <div><input type="text" id="school" placeholder="" autocomplete="off" alizi-request="1" class="alizi-input-text" value=""></div>
+    <label>班级：</label>
+    <div>
+        <form>
+            <select id="grade">
+                <option>一年级</option>
+                <option>二年级</option>
+                <option>三年级</option>
+                <option>四年级</option>
+                <option>五年级</option>
+                <option>六年级</option>
+                <option>七年级</option>
+                <option>八年级</option>
+                <option>九年级</option>
+            </select>
+        </form>
+    </div>
+    <label class="rows-head">中队：</label>
+    <div>
+        <form>
+            <select id="squad">
+                <option>一中队</option>
+                <option>二中队</option>
+                <option>三中队</option>
+                <option>四中队</option>
+                <option>五中队</option>
+                <option>六中队</option>
+                <option>七中队</option>
+                <option>八中队</option>
+                <option>九中队</option>
+            </select>
+        </form>
+    </div>
+    <button type="button" onclick="jump()">查询</button>
+    <p id="show"></p>
+
+
+</body>
+
+</html>
