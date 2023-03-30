@@ -7,7 +7,7 @@
 			/* 小屏幕手机端 */
 			@media (min-width: 0px) and (max-width:768px) {
 				.div1{
-					width: 500px;
+					width: 420px;
 					height: 60px;
 				}
 			}
@@ -15,7 +15,7 @@
 			/* 中等屏幕（桌面显示器，大于等于 992px） */
 			@media (min-width: 768px) and (max-width:992px){
 				.div1{
-					width: 800px;
+					width: 700px;
 					height: 60px;
 				}
 			}
@@ -23,7 +23,7 @@
 			/* 大屏幕（大桌面显示器，大于等于 1200px） */
 			@media (min-width: 992px) {
 				.div1{
-					width: 1000px;
+					width: 900px;
 					height: 60px;
 				}
 			}
@@ -80,7 +80,7 @@
     <h1 align="center">阳春市中队辅导员号码查询</h1>
 	<font size="6">
     <label>学校全称：</label>
-    <div><input type="text" id="school" placeholder="如：阳春市春城街道第一小学" autocomplete="off" alizi-request="1" class="div1" value="阳春市春城街道第一小学" style="font-size:30px"></div>
+    <div><input type="text" id="school" placeholder="如：阳春市春城街道第一小学" autocomplete="off" alizi-request="1" class="div1" value="" style="font-size:30px"></div>
     <label><br>班级：</label>
     <div>
         <form>
@@ -158,8 +158,9 @@
     </div class="div1">
     <label><br></label>
     <button class="div1" style="font-size:30px" type="button" onclick="jump()">查询</button>
-    <h4 id="show"></h4>
+    <label><br><br></label>
 	</font>
+    <font id="show" size="6"></font>
 </div>
 </body>
 
